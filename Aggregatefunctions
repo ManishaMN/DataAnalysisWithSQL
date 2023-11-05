@@ -1,0 +1,19 @@
+---Aggregate functions-------
+
+SELECT max(open)
+FROM stock_prices
+where ticker = 'NFLX';
+
+SELECT min(open)
+FROM stock_prices
+where ticker = 'MSFT';
+
+SELECT AVG(open)
+FROM stock_prices
+where ticker = 'GOOG';
+
+SELECT count(*), sum(total_sales) FROM pharmacy_sales
+where manufacturer = 'Pfizer';
+
+SELECT count(*) from pharmacy_sales;
+
