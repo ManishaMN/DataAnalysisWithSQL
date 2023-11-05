@@ -1,2 +1,2 @@
 # DataAnalysisWithSQL
-https://datalemur.com/sql-tutorial/intermediate-data-science-sql-intro
+[Intermediate SQL](https://datalemur.com/sql-tutorial/intermediate-data-science-sql-intro)
