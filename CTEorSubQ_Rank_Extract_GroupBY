@@ -18,3 +18,15 @@ total_spend
 from ranking_spend
 where ranking <=2
 ORDER BY category, ranking;
+
+
+---using subquery
+select category, product,total_spend
+from 
+(select category, product, sum(spend) as total_spend,
+rank() over( PARTITION BY category ORDER BY sum(spend) DESC) as ranking
+from product_spend
+where EXTRACT(year from transaction_date) = 2022
+GROUP BY category, product
+order by category, ranking) as ranking
+where ranking <=2
