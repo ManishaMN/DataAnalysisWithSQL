@@ -1,0 +1,10 @@
+SELECT ticker,
+       MIN(open)
+ FROM stock_prices
+      group by ticker
+      order by MIN(open) DESC;
+
+SELECT skill, count(candidate_id)
+ FROM candidates
+group by skill
+order by count(candidate_id) DESC;
