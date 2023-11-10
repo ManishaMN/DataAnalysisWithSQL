@@ -1,0 +1,5 @@
+-- Distinct ( count & group by)
+
+SELECT category, count(distinct product)
+FROM product_spend
+group by category;
