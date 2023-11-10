@@ -1,0 +1,9 @@
+--Cities With Completed Trades ( count, inner join, where, group by, order by, limit)
+
+SELECT users.city, count(traders.order_id) as total_orders
+from trades
+inner join users on users.user_id = trades.user_id 
+where status = 'Completed'
+group by city
+ORDER BY total_orders DESC
+limit 3
