@@ -1,0 +1,5 @@
+--Math functions ( example ceil)
+SELECT drug, ceil(total_sales/units_sold) as unit_cost
+FROM pharmacy_sales
+where manufacturer = 'Merck'
+order by unit_cost;
