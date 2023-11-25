@@ -1,0 +1,22 @@
+SELECT actor, character,platform, avg_likes, 
+CASE
+    WHEN avg_likes >= 15000 THEN 'Super Likes'
+    WHEN avg_likes BETWEEN 5000 AND 14999 THEN 'Good Likes'
+    ELSE 'Low Likes'
+  END AS likes_category
+ FROM marvel_avengers 
+ ORDER BY avg_likes DESC
+
+
+SELECT 
+sum(case when device_type = 'laptop' then 1 else 0 end) AS laptop_reviews,
+sum(case when device_type != 'laptop' then 1 else 0 end) as mobile_views
+FROM viewership
+
+---------same problem different approach
+
+SELECT
+COUNT(*) filter( WHERE device_type='laptop') as laptop_views,
+COUNT(*) filter( WHERE device_type not in('laptop')) as mobile_views
+from viewership;
+
