@@ -1,0 +1,20 @@
+SELECT * 
+FROM trades t
+LEFT JOIN users u ON t.user_id = u.user_id ;
+
+SELECT 
+  users.city, 
+  COUNT(trades.order_id) AS total_orders 
+FROM trades 
+INNER JOIN users 
+  ON trades.user_id = users.user_id 
+WHERE trades.status = 'Completed' 
+GROUP BY users.city 
+ORDER BY total_orders DESC
+LIMIT 3;
+
+SELECT p.page_id
+FROM pages p LEFT JOIN page_likes pl
+ON p.page_id = pl.page_id
+GROUP BY p.page_id
+having count(liked_date) = 0
