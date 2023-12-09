@@ -1,0 +1,15 @@
+Datetime
+
+
+SELECT user_id, EXTRACT( DAY FROM (max(post_date)- min(post_date))) as days_between
+FROM posts
+where EXTRACT(YEAR FROM post_date ) = '2021'
+GROUP BY user_id
+HAVING count(post_id) >1
+
+
+SELECT user_id
+FROM emails
+LEFT JOIN texts on emails.email_id = texts.email_id
+where signup_action = 'Confirmed' and 
+EXTRACT(DAY FROM action_date )= EXTRACT(DAY FROM (signup_date + INTERVAL '1 days'))
