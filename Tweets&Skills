@@ -1,0 +1,14 @@
+SELECT BUCK AS tweet_bucket, COUNT(user_id)
+FROM (SELECT COUNT(*) AS BUCK, user_id
+FROM tweets
+where EXTRACT(YEAR from tweet_date) = 2022
+GROUP BY user_id
+) AS SUB
+GROUP BY tweet_bucket 
+
+SELECT candidate_id 
+FROM candidates
+where skill in ( 'Python' , 'Tableau', 'PostgreSQL')
+GROUP BY candidate_id 
+having count(skill) >= 3
+order by candidate_id
