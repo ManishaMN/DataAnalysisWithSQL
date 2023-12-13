@@ -1,0 +1,47 @@
+--- order by
+SELECT drug, (total_sales- cogs) as Total_profit
+FROM pharmacy_sales
+order by Total_profit DESC
+limit 3;
+
+--- like with-
+SELECT * FROM customers 
+where customer_name like'_ee%'
+
+---filtering
+SELECT * FROM customers
+where age between 18 and 22 
+and state in ('Victoria', 'Tasmania', 'Queensland') 
+and gender !='n/a'
+and ( customer_name like 'A%' or customer_name like 'B%')
+
+--- like
+SELECT * FROM customers 
+where customer_name like 'F%' and customer_name like'%ck'
+
+-- not between
+SELECT manufacturer, drug, units_sold
+FROM pharmacy_sales
+where manufacturer in ('Roche', 'Bayer', 'AstraZeneca') AND
+units_sold not between 55000 and 550000;
+
+--between
+SELECT manufacturer,  drug, units_sold
+FROM pharmacy_sales
+where units_sold BETWEEN 100000 and 105000 and manufacturer in ('Biogen', 'AbbVie','Eli Lilly');
+
+--where and
+SELECT * 
+FROM reviews
+where stars >=4 and review_id < 6000 and review_id>2000 and user_id!= 142;
+--where
+
+SELECT user_id, stars
+FROM reviews
+where stars = 3;
+
+--select
+
+select *
+from products
+
