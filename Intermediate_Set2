@@ -1,0 +1,155 @@
+--SELECT * FROM pharmacy_sales;
+SELECT count(*) from pharmacy_sales;
+
+SELECT count(*), sum(total_sales) FROM pharmacy_sales
+where manufacturer = 'Pfizer' ;
+
+SELECT AVG(open)
+ FROM stock_prices
+where ticker = 'GOOG';
+
+SELECT min(open)
+FROM stock_prices
+where ticker = 'MSFT';
+
+SELECT max(open)
+FROM stock_prices
+where ticker = 'NFLX';
+
+	
+SELECT ticker,
+       MIN(open)
+ FROM stock_prices
+      group by ticker
+      order by MIN(open) DESC;
+
+SELECT skill, count(candidate_id)
+ FROM candidates
+group by skill
+order by count(candidate_id) DESC;
+
+SELECT ticker, min(open)
+FROM stock_prices
+GROUP BY ticker
+having min(open) > 100;
+
+
+select candidate_id
+from 
+(SELECT candidate_id, count(skill)
+FROM candidates
+group by candidate_id
+having count(skill) >2) as skill
+
+----------------------
+
+SELECT candidate_id FROM candidates
+GROUP BY candidate_id
+HAVING COUNT(candidate_id) > 2;
+
+---------------------
+
+SELECT candidate_id
+FROM candidates
+WHERE skill IN ('Python', 'Tableau', 'PostgreSQL')
+GROUP BY candidate_id
+HAVING COUNT(skill) = 3
+ORDER BY candidate_id; 
+--------------------
+
+SELECT category, count(distinct product)
+FROM product_spend
+group by category;
+
+----------------------
+SELECT ticker , count(ticker)
+FROM stock_prices
+where abs((close-open)/open)*100 > 10
+group by ticker
+ORDER BY count(ticker) DESC
+
+--------------------
+
+SELECT drug, (total_sales- cogs) as Total_profit
+FROM pharmacy_sales
+order by Total_profit DESC
+limit 3;
+
+------------------------
+select drug, (total_sales- cogs) as pharmacy_sales
+FROM pharmacy_sales
+order by pharmacy_sales DESC
+limit 3
+
+------------------------
+SELECT card_name, (max(issued_amount) - min(issued_amount)) as difference
+FROM monthly_cards_issued
+group by card_name
+order by difference DESC;
+-----------------------
+SELECT drug, ceil(total_sales/units_sold) as unit_cost
+FROM pharmacy_sales
+where manufacturer = 'Merck'
+order by unit_cost;
+--------------------------
+SELECT  part , assembly_step
+FROM parts_assembly
+where finish_date is NULL
+----------------------------
+SELECT actor, character,platform, avg_likes, 
+CASE
+    WHEN avg_likes >= 15000 THEN 'Super Likes'
+    WHEN avg_likes BETWEEN 5000 AND 14999 THEN 'Good Likes'
+    ELSE 'Low Likes'
+  END AS likes_category
+ FROM marvel_avengers 
+ ORDER BY avg_likes DESC
+------------------
+--SELECT 
+--sum(case when device_type = 'laptop' then 1 else 0 end) AS laptop_reviews,
+--sum(case when device_type != 'laptop' then 1 else 0 end) as mobile_views
+--FROM viewership
+
+
+SELECT
+COUNT(*) filter( WHERE device_type='laptop') as laptop_views,
+COUNT(*) filter( WHERE device_type not in('laptop')) as mobile_views
+from viewership;
+------------------------
+SELECT * 
+FROM trades t
+LEFT JOIN users u ON t.user_id = u.user_id ;
+
+--------------------
+
+select u.city , count(*) as  total_orders
+from users u left join trades t
+on u.user_id = t.user_id
+where status = 'Completed'
+group by city
+ORDER BY total_orders DESC
+limit 3
+
+------------------------
+
+SELECT p.page_id
+FROM pages p LEFT JOIN page_likes pl
+ON p.page_id = pl.page_id
+GROUP BY p.page_id
+having count(liked_date) = 0
+
+----------------------------
+SELECT user_id, EXTRACT( DAY FROM (max(post_date)- min(post_date))) as days_between
+FROM posts
+where EXTRACT(YEAR FROM post_date ) = '2021'
+GROUP BY user_id
+HAVING count(post_id) >1
+
+
+SELECT user_id
+FROM emails
+LEFT JOIN texts on emails.email_id = texts.email_id
+where signup_action = 'Confirmed' and 
+EXTRACT(DAY FROM action_date )= EXTRACT(DAY FROM (signup_date + INTERVAL '1 days'))
+
+
