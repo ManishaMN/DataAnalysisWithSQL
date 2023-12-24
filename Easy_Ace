@@ -1,0 +1,45 @@
+--group users by number of tweets in 2022( create data for histogram)
+
+SELECT
+  tweet_bucket,
+  count(*) as users_num
+FROM (SELECT
+  user_id,
+  count(*) as tweet_bucket
+FROM tweets
+WHERE EXTRACT(YEAR FROM tweet_date) = 2022
+GROUP BY user_id) as sub
+GROUP BY tweet_bucket
+
+---- List the candidates with all the required skills for the job. Sort the output by candidate ID in ascending order.
+
+SELECT
+  candidate_id
+FROM candidates
+WHERE skill in ('Python','Tableau','PostgreSQL')
+GROUP BY candidate_id
+HAVING count(*) >= 3
+ORDER BY candidate_id
+
+-------------- IDs of the Facebook pages that have zero likes. The output should be sorted in ascending order based on the page IDs
+----------(can be done in multiple ways, used order by within subquery since EXcept is not allowing order by just above it)
+
+SELECT *
+FROM 
+(SELECT 
+  page_id
+FROM pages
+ORDER BY page_id) as sub
+
+EXCEPT
+
+SELECT
+  page_id
+FROM page_likes
+
+/* SELECT page_id
+FROM pages 
+WHERE page_id not in (select page_id from page_likes )
+order by page_id */
+
+
